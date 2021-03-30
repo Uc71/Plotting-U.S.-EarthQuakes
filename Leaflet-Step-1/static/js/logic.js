@@ -10,7 +10,7 @@ var myMap=L.map("map",{
     zoomOffset:-1,
     accessToken:API_KEY
 }).addTo(mymap);
-var quakes=d3.json("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_month.geojson", function(data))
+var quakes=d3.json("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_month.geojson", function(data){})
 for(var i=0;i<quakes.length;i++){
     L.circle(quakes[i].location,{
      fillOpacity:.75,
