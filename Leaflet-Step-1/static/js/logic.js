@@ -11,12 +11,60 @@ var grayMap = L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{
     accessToken:API_KEY
 });
 grayMap.addTo(myMap);
-// var quakes=d3.json("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_month.geojson", function(data){})
-// for(var i=0;i<quakes.length;i++){
-//     L.circle(quakes[i].location,{
-//      fillOpacity:.75,
-//      color:"white",
-//      fillColor:"purple",
-//      radius:markerSize(quakes[i].mag) 
-//      }).bindPopup("<h1>"+quakes[i].time +"</h1> <hr> <h3>Population: "+quakes[i].gap+"</h3>").addTo(myMap);
-//     }
+var quakes=d3.json("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_month.geojson").then(function(data){})
+for(var i=0;i<quakes.length;i++){
+    L.circle(quakes[i].location,{
+     fillOpacity:.75,
+     color:"white",
+     fillColor:"purple",
+     radius:markerSize(((quakes[i].mag)/Math.PI)**.5)
+     }).bindPopup("<h1>"+quakes[i].time +"</h1> <hr> <h3>Population: "+quakes[i].gap+"</h3>").addTo(myMap);
+    }
+    //COPIED FROM EXERCISE 17.2.4
+    // Grab data with d3
+d3.json(geoData, function(data) {
+    // Create a new choropleth layer
+    geojson = L.choropleth(data, {
+      // Define what  property in the features to use
+      valueProperty: "MHI2016",
+      // Set color scale
+      scale: ["#ffffb2", "#b10026"],
+      // Number of breaks in step range
+      steps: 10,
+      // q for quartile, e for equidistant, k for k-means
+      mode: "q",
+      style: {
+        // Border color
+        color: "#fff",
+        weight: 1,
+        fillOpacity: 0.8
+      },
+      // Binding a pop-up to each layer
+      onEachFeature: function(feature, layer) {
+        layer.bindPopup("Zip Code: " + feature.properties.ZIP + "<br>Median Household Income:<br>" +
+          "$" + feature.properties.MHI2016);
+      }
+    }).addTo(myMap);
+    // Set up the legend
+    var legend = L.control({ position: "bottomright" });
+    legend.onAdd = function() {
+      var div = L.DomUtil.create("div", "info legend");
+      var limits = geojson.options.limits;
+      var colors = geojson.options.colors;
+      var labels = [];
+      // Add min & max
+      var legendInfo = "<h1>Median Income</h1>" +
+        "<div class=\"labels\">" +
+          "<div class=\"min\">" + limits[0] + "</div>" +
+          "<div class=\"max\">" + limits[limits.length - 1] + "</div>" +
+        "</div>";
+      div.innerHTML = legendInfo;
+      limits.forEach(function(limit, index) {
+        labels.push("<li style=\"background-color: " + colors[index] + "\"></li>");
+      });
+      div.innerHTML += "<ul>" + labels.join("") + "</ul>";
+      return div;
+    };
+    // Adding legend to the map
+    legend.addTo(myMap);
+  });
