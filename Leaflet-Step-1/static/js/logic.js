@@ -11,22 +11,42 @@ var grayMap = L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{
     accessToken:API_KEY
 });
 grayMap.addTo(myMap);
-var quakes=d3.json("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_month.geojson").then(function(data){})
-for(var i=0;i<quakes.length;i++){
-    L.circle(quakes[i].location,{
-     fillOpacity:.75,
-     color:"white",
-     fillColor:"purple",
-     radius:markerSize(((quakes[i].mag)/Math.PI)**.5)
-     }).bindPopup("<h1>"+quakes[i].time +"</h1> <hr> <h3>Population: "+quakes[i].gap+"</h3>").addTo(myMap);
-    }
+// var quakes=d3.json("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_month.geojson").then(function(data){})
+// for(var i=0;i<quakes.length;i++){
+//     L.circle(quakes[i].location,{
+//      fillOpacity:.75,
+//      color:"white",
+//      fillColor:"purple",
+//      radius:markerSize(((quakes[i].mag)/Math.PI)**.5)
+//      }).bindPopup("<h1>"+quakes[i].time +"</h1> <hr> <h3>Population: "+quakes[i].gap+"</h3>").addTo(myMap);
+//     }
     //COPIED FROM EXERCISE 17.2.4
     // Grab data with d3
-d3.json(geoData, function(data) {
-    // Create a new choropleth layer
-    geojson = L.choropleth(data, {
+d3.json("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_month.geojson").then(function(data){
+    function style(){
+    };
+    function getcolor(depth){
+      switch(True){
+        case depth > 90:
+          return #ea2c2c;
+        case depth > 70:
+          return #ea2c2c;
+        case depth > 50:
+          return #ea2c2c;
+        case depth > 30:
+          return #ea2c2c;
+        case depth > 10:
+          return #ea2c2c;
+        default:
+          return #ea2c2c;
+      }
+      };
+    function getradius(mag){
+      return (mag/Math.PI)**.5;
+    };
+    geojson=L.circle(data,{
       // Define what  property in the features to use
-      valueProperty: "MHI2016",
+      valueProperty:"geometry.coordinates",
       // Set color scale
       scale: ["#ffffb2", "#b10026"],
       // Number of breaks in step range
@@ -67,4 +87,4 @@ d3.json(geoData, function(data) {
     };
     // Adding legend to the map
     legend.addTo(myMap);
-  });
+});
