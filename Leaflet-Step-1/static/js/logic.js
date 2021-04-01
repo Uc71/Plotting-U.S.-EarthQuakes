@@ -28,17 +28,17 @@ d3.json("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_month.geo
     function getcolor(depth){
       switch(True){
         case depth > 90:
-          return #ea2c2c;
+          return "#00FFA4";
         case depth > 70:
-          return #ea2c2c;
+          return "#00CD84";
         case depth > 50:
-          return #ea2c2c;
+          return "#006E47";
         case depth > 30:
-          return #ea2c2c;
+          return "#006A44";
         case depth > 10:
-          return #ea2c2c;
+          return "#003422";
         default:
-          return #ea2c2c;
+          return "#000000";
       }
       };
     function getradius(mag){
