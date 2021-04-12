@@ -11,17 +11,6 @@ var grayMap = L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{
     accessToken:API_KEY
 });
 grayMap.addTo(myMap);
-// var quakes=d3.json("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_month.geojson").then(function(data){})
-// for(var i=0;i<quakes.length;i++){
-//     L.circle(quakes[i].location,{
-//      fillOpacity:.75,
-//      color:"white",
-//      fillColor:"purple",
-//      radius:markerSize(((quakes[i].mag)/Math.PI)**.5)
-//      }).bindPopup("<h1>"+quakes[i].time +"</h1> <hr> <h3>Population: "+quakes[i].gap+"</h3>").addTo(myMap);
-//     }
-    //COPIED FROM EXERCISE 17.2.4
-    // Grab data with d3
 d3.json("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_month.geojson",function(data){
     console.log(data)
     function styleI(feature){
@@ -53,36 +42,12 @@ d3.json("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_month.geo
     function getradius(mag){
       return 2*((mag/Math.PI)**.5);
     };
-
-  //   var geojsonMarkerOptions = {
-  //     radius: 8,
-  //     fillColor: getcolor(feature.geometry.coordinates[2]),
-  //     color: "#000",
-  //     weight: 1,
-  //     opacity: 1,
-  //     fillOpacity: 0.8
-  // };
-
     L.geoJSON(data, {
       style: styleI,
       pointToLayer: function(feature, latlng) {
-        //geojsonMarkerOptions.fillColor(feature.geometry.coordinates[2])
         return L.circleMarker(latlng )
       }
   }).addTo(myMap);
-    // geojson=L.circle(data,{
-    //   // Define what  property in the features to use
-    //   valueProperty:"geometry.coordinates",
-    //   // Set color scale
-    //   scale:["#ffffb2","#b10026"],
-    //   // Number of breaks in step range
-    //   steps:10,
-    //   // q for quartile, e for equidistant, k for k-means
-    //   //mode: "q",
-    //   style: {
-    //     // Border color
-    //     color: "#fff",
-    //   },
     //   // Binding a pop-up to each layer
     //   onEachFeature: function(feature,layer){
     //     layer.bindPopup("Zip Code: "+feature.properties.ZIP + "<br>Median Household Income:<br>"+
@@ -117,3 +82,22 @@ d3.json("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_month.geo
     // a = ['red'. 'blue']
     // b = ['1-3', '3-5']
 });
+var legend = L.control({position: 'bottomright'});
+
+legend.onAdd = function (map) {
+
+    var div = L.DomUtil.create('div', 'info legend'),
+        grades = [0, 10, 20, 50, 100, 200, 500, 1000],
+        labels = [];
+
+    // loop through our density intervals and generate a label with a colored square for each interval
+    for (var i = 0; i < grades.length; i++) {
+        div.innerHTML +=
+            '<i style="background:' + getColor(grades[i] + 1) + '"></i> ' +
+            grades[i] + (grades[i + 1] ? '&ndash;' + grades[i + 1] + '<br>' : '+');
+    }
+
+    return div;
+};
+
+legend.addTo(map);
