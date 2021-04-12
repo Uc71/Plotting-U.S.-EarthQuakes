@@ -28,32 +28,31 @@ d3.json("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_month.geo
         return {
           fillColor: getcolor(feature.geometry.coordinates[2]),
           "color": "black",
-          "fillOpacity": 1,
+          "fillOpacity":.5,
           "opacity":1,
-          "stroke":false
+          "stroke":false,
+          radius: getradius(feature.properties.mag)
         }
     };
     function getcolor(depth){
       switch(true){
         case depth > 90:
-          return "#00FFA4";
+          return "#FF0101";
         case depth > 70:
-          return "#00CD84";
+          return "#D50000";
         case depth > 50:
-          return "#006E47";
+          return "#B60000";
         case depth > 30:
-          return "#006A44";
+          return "#8C0000";
         case depth > 10:
-          return "#003422";
+          return "#660000";
         default:
           return "000000";
       }
       };
     function getradius(mag){
-      return (mag/Math.PI)**.5;
+      return 2*((mag/Math.PI)**.5);
     };
-
-    console.log(data);
 
   //   var geojsonMarkerOptions = {
   //     radius: 8,
