@@ -25,17 +25,17 @@ d3.json("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_month.geo
     function getcolor(depth){
       switch(true){
         case depth > 90:
-          return "#FF0101";
+          return "#000000";
         case depth > 70:
-          return "#D50000";
-        case depth > 50:
-          return "#B60000";
-        case depth > 30:
-          return "#8C0000";
-        case depth > 10:
           return "#660000";
+        case depth > 50:
+          return "#8C0000";
+        case depth > 30:
+          return "#B60000";
+        case depth > 10:
+          return "#D50000";
         default:
-          return "000000";
+          return "#FF0101";
       }
       };
     function getradius(mag){
@@ -49,7 +49,7 @@ d3.json("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_month.geo
   }).addTo(myMap);
 });
 var legend=L.control({
-  position:"bottomright"
+  position:"bottomright",
 });
 legend.onAdd=function(){
   var div=L
@@ -57,16 +57,16 @@ legend.onAdd=function(){
     .create("div","info legend");
   var depths=[-10,10,30,50,70,90];
   var colors=[
-    "#000000",
-    "#660000",
-    "#8C0000",
-    "#B60000",
+    "#FF0101",
     "#D50000",
-    "#FF0101"
+    "#B60000",
+    "#8C0000",
+    "#660000",
+    "#000000"
   ];
   for (var i=0;i<depths.length;i++){
     div.innerHTML += "<i style='background: " + colors[i] + "'></i> " +
-      depths[i] + (depths[i + 1] ? " to " + depths[i + 1] + "<br>" : "+");
+      depths[i] + (depths[i + 1] ? " to " + depths[i + 1] + " m below ground"+"<br>" : "+ m below ground");
   }
   return div;
 };
