@@ -1,6 +1,6 @@
 var myMap=L.map("mapid",{
-    center:[44.967243,-103.771556],
-    zoom:3
+    center:[52,-120],
+    zoom:4
    });
 var grayMap = L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}',{
     attribution:'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
@@ -12,7 +12,6 @@ var grayMap = L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{
 });
 grayMap.addTo(myMap);
 d3.json("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_month.geojson",function(data){
-    console.log(data)
     function styleI(feature){
         return {
           fillColor: getcolor(feature.geometry.coordinates[2]),
