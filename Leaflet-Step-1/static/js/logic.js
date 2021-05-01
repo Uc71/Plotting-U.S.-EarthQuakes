@@ -82,17 +82,29 @@ d3.json("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_month.geo
     // a = ['red'. 'blue']
     // b = ['1-3', '3-5']
 });
-// var legend = L.control({position: 'bottomright'});
-// legend.onAdd = function (map) {
-//     var div = L.DomUtil.create('div', 'info legend'),
-//         grades = [90, 70, 50, 30, 10, -10],
-//         labels = [];
-//     // loop through our density intervals and generate a label with a colored square for each interval
-//     for (var i = 0; i < grades.length; i++) {
-//         div.innerHTML +=
-//             '<i style="background:' + getColor(grades[i] + 1) + '"></i> ' +
-//             grades[i] + (grades[i + 1] ? '&ndash;' + grades[i + 1] + '<br>' : '+');
-//     }
-//     return div;
-// };
-// legend.addTo(map);
+var legend=L.control({
+  position:"bottomright"
+});
+// Then we add all the details for our legend
+legend.onAdd=function(){
+  var div=L
+    .DomUtil
+    .create("div","info legend");
+  var grades=[90,70,50,30,10,-10];
+  var colors=[
+    "#ed0053",
+    "#ff7105",
+    "#ffb805",
+    "#edda09",
+    "#f2ff00",
+    "#15ff00"
+  ];
+  // Loop through our intervals and generate a label with a colored square for each interval.
+  for (var i=0;i<grades.length;i++){
+    div.innerHTML += "<i style='background: " + colors[i] + "'></i> " +
+      grades[i] + (grades[i + 1] ? "&ndash;" + grades[i + 1] + "<br>" : "+");
+  }
+  return div;
+};
+// We add our legend to the map.
+legend.addTo(myMap);
