@@ -51,24 +51,22 @@ d3.json("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_month.geo
 var legend=L.control({
   position:"bottomright"
 });
-// Then we add all the details for our legend
 legend.onAdd=function(){
   var div=L
     .DomUtil
     .create("div","info legend");
-  var depths=[90,70,50,30,10,-10];
+  var depths=[-10,10,30,50,70,90];
   var colors=[
-    "#FF0101",
-    "#D50000",
-    "#B60000",
-    "#8C0000",
+    "#000000",
     "#660000",
-    "#000000"
+    "#8C0000",
+    "#B60000",
+    "#D50000",
+    "#FF0101"
   ];
-  // Loop through our intervals and generate a label with a colored square for each interval.
   for (var i=0;i<depths.length;i++){
     div.innerHTML += "<i style='background: " + colors[i] + "'></i> " +
-      depths[i] + (depths[i + 1] ? "&ndash;" + depths[i + 1] + "<br>" : "+");
+      depths[i] + (depths[i + 1] ? " to " + depths[i + 1] + "<br>" : "+");
   }
   return div;
 };
