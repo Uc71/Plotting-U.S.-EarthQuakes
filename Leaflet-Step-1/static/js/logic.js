@@ -65,8 +65,8 @@ legend.onAdd=function(){
     "#000000"
   ];
   for (var i=0;i<depths.length;i++){
-    div.innerHTML += "<i style='background: " + colors[i] + "'></i> " +
-      depths[i] + (depths[i + 1] ? " to " + depths[i + 1] + " m below ground"+"<br>" : "+ m below ground");
+    div.innerHTML+="<i style='background: "+colors[i]+"'></i> "+
+      depths[i]+(depths[i+1]?" to "+depths[i+1]+" km below ground"+"<br>":"+");
   }
   return div;
 };
