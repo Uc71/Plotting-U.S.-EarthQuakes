@@ -47,7 +47,7 @@ d3.json("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_month.geo
         return L.circleMarker(latlng,feature)
       },
       onEachFeature:function(feature, layer){
-        return layer.bindPopup(`<strong>Place:</strong>${feature.properties.place}<br><strong>Magnitude:</strong>${feature.properties.mag}`);
+        return layer.bindPopup(`<strong>Place: </strong>${feature.properties.place}<br><strong>Tsunami?: </strong>${feature.properties.tsunami}<br><strong>Root Mean Square: <strong>${feature.properties.rms}<br><strong>Magnitude: </strong>${feature.properties.mag}`);
       }
   }).addTo(myMap);
 });
