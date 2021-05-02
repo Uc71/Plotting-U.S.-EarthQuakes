@@ -15,11 +15,11 @@ d3.json("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_month.geo
     function styleI(feature){
         return {
           fillColor: getcolor(feature.geometry.coordinates[2]),
-          "color": "black",
+          "color":"black",
           "fillOpacity":.5,
           "opacity":1,
           "stroke":false,
-          radius: getradius(feature.properties.mag)
+          radius:getradius(feature.properties.mag)
         }
     };
     function getcolor(depth){
@@ -43,8 +43,11 @@ d3.json("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_month.geo
     };
     L.geoJSON(data, {
       style: styleI,
-      pointToLayer: function(feature, latlng) {
-        return L.circleMarker(latlng )
+      pointToLayer: function(feature,latlng){
+        return L.circleMarker(latlng,feature)
+      },
+      onEachFeature:function(feature, layer){
+        return layer.bindPopup(`<strong>Place:</strong>${feature.properties.place}<br><strong>Magnitude:</strong>${feature.properties.mag}`);
       }
   }).addTo(myMap);
 });
