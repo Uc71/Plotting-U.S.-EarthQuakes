@@ -11,3 +11,8 @@ I created a function "getcolor", incorporating a switch case statement, to choos
 I created another function, using the formula "return 3*((mag/Math.PI)**.5)" to calculate a radius result "getradius", based on the mag of each earthquake.
 In the "getradius" function, I made the total area of each marker directly proportional to the mag of the earthquake.
 This is the reason for the widely varying marker radii.
+
+On each feature, I made a function to bind a pop up containing, earthquake mag, root mean square, the location of each quake relative to nearby cities, and whether or not each quake caused a tsunami.
+
+I created a legend and positioned it in the bottom right of the window.
+I made lists of depths and colors in the code for the legend, then looped through them to create the color boxes and corresponding depth labels.
